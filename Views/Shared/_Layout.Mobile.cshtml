@@ -1,0 +1,113 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TextMe</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="~/Content/Images/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/Images/apple-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/Images/apple-icon-114x114.png" />
+    <link href="~/Content/kendo/2017.1.223/kendo.common.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/kendo/2017.1.223/kendo.default.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/kendo/2017.1.223/kendo.mobile.all.min.css" rel="stylesheet" type="text/css" />
+
+    @*<link href="~/Content/kendo/2017.1.223/kendo.black.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.blueopal.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.bootstrap.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.mobile.material.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.materialblack.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.metro.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.metroblack.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/kendo/2017.1.223/kendo.mobile.flat.min.css" rel="stylesheet" type="text/css" />
+    
+    @*<link href="~/Content/kendo/2017.1.223/kendo.mobile.meego.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.mobile.nova.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.mobile.office365.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.mobile.wp8.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.moonlight.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.silver.mobile.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="~/Content/kendo/2017.1.223/kendo.uniform.mobile.min.css" rel="stylesheet" type="text/css" />*@
+
+    <script src="~/Scripts/kendo/2017.1.223/jquery.min.js"></script>
+    <script src="~/Scripts/kendo/2017.1.223/jszip.min.js"></script>
+    <script src="~/Scripts/kendo/2017.1.223/kendo.all.min.js"></script>
+    <script src="~/Scripts/kendo/2017.1.223/kendo.timezones.min.js"></script>
+    <script src="~/Scripts/kendo/2017.1.223/kendo.aspnetmvc.min.js"></script>
+    <script src="~/Scripts/kendo.modernizr.custom.js"></script>
+</head>
+<body>
+@RenderBody()
+<div data-role="layout" data-id="default">
+    <header data-role="header">
+        <div data-role="navbar" style="background-color: #6ed0f7">
+            <a data-role="button" data-rel="drawer" href="#drawer" data-align="left" style="background: none; margin: 0; padding: 0; border-style: none; text-align: left;">
+                <img src="~/Content/Images/apple-icon-57x57.png" style="width:66%" /></a>
+            @*<a data-align="left" data-icon="settings" data-role="button" href="#settings"></a>*@
+            <span data-role="view-title" style="font-weight: 500; color: aliceblue"></span>
+            <a data-align="right" data-icon="trash" data-role="button" data-click="newAction" style="display: none" id="trash"></a>
+            <a data-align="right" data-icon="add" data-role="button" data-click="newAction" id="add"></a>
+        </div>
+    </header>
+    
+    @*<div data-role="footer">
+        <div data-role="tabstrip" id="tabstrip">
+            <a href="#home" data-icon="home">Home</a>
+            <a href="#call" data-icon="phone">Call</a>
+            <a href="#text" data-icon="compose">Text</a>
+        </div>
+    </div>*@
+</div>
+<style type="text/css">
+    .km-flat .km-view .km-navbar {
+        background-color: rgb(110, 208, 247);
+    }
+
+    .km-flat .km-view .km-navbar .km-view-title > * {
+        color: rgb(255, 255, 255);
+    }
+
+    .km-flat .km-view .km-navbar .km-button.km-state-active {
+        background-color: rgb(35, 145, 199);
+    }
+
+    .km-flat .km-view .km-navbar .km-button {
+        background-color: rgb(110, 208, 247);
+    }
+
+    .km-flat .km-view .km-content .km-list .km-state-active .km-listview-link {
+        background-color: rgb(35, 145, 199);
+    }
+
+    .km-flat .km-view .km-tabstrip .km-button.km-state-active {
+        background-color: rgb(35, 145, 199);
+    }
+
+    .km-flat .km-view .km-content .km-button.km-state-active {
+        background-color: rgb(35, 145, 199);
+    }
+</style>
+<script type="text/javascript">
+    var app = new kendo.mobile.Application($(document.body), {
+        skin: "flat",
+        layout: "default",
+        events: [
+            {
+                init: "applicationInit"
+            }]
+    });
+
+    var tabstrip;
+    function applicationInit(e) {
+        console.log("Initializing the app");
+        //tabstrip = $("#tabstrip").data("kendoMobileTabStrip");
+    }
+</script>
+
+
+</body>
+</html>

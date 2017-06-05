@@ -1,0 +1,54 @@
+﻿<center>
+    <h1>Sorry</h1>
+    <p>SaveMe works best on a phone or tablet...<br />
+    Since you are on a browser I have put an iPhone here for you:</p>
+
+
+<a class="k-button kb-button" onclick="setViewAngle('left')">Left</a>
+<a class="k-button kb-button" onclick="setViewAngle('front')">Front</a>
+<a class="k-button kb-button" onclick="setViewAngle('right')">Right</a>
+    <hr />
+
+<div id="preview"></div>
+</center>
+
+<style type="text/css">
+    .kb-button {
+        width: 5em;
+    }
+</style>
+
+<script type="text/javascript">
+    // store the empty div
+    var divClone = $("#preview").clone();
+
+    $(document).ready(function () {
+        setViewAngle("left");
+    });
+
+    function setViewAngle(angle) {
+        // clear div
+        $("#preview").replaceWith(divClone.clone());
+        var image = '/Content/Images/iphone6_side_left_gold.png';
+
+        switch (angle) {
+            case "left":
+                image = '/Content/Images/iphone6_side_left_gold.png';
+                break;
+            case "front":
+                image = '/Content/Images/iphone6_front_gold.png';
+                break;
+            case "right":
+                image = '/Content/Images/iphone6_side_right_gold.png';
+                break;
+            default:
+        }
+
+        bioMp(document.getElementById('preview'), {
+            url: 'Home/Mobile',
+            view: angle,
+            image: image,
+            agent: 'ios'
+        });
+    }
+</script>

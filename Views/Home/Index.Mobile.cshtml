@@ -1,0 +1,405 @@
+﻿<div data-role="view" id="home" data-title="SaveMe" data-layout="default" data-after-show="afterShowHome">
+    <div id="newAction" hidden>
+        <ul data-role="listview" id="register">
+            <li>
+                <label>
+                    Action
+                    <select id="Action">
+                        <option value="Text">Text</option>
+                        <option value="Call">Call</option>
+                    </select>
+                </label>
+
+            </li>
+            <li>
+                <label>
+                    Title
+                    <input id="Title" type="text" placeholder="Enter title" required />
+                </label>
+            </li>
+            <li>
+                <label>
+                    Message
+                    <input id="Message" type="text" placeholder="Enter message" required />
+                </label>
+
+            </li>
+            <li><a data-role="detailbutton" data-icon="add" onclick="addItem()" class="km-primary km-button-right"><label>Save the Action</label></a></li>
+            @*<li>
+                    <label>
+                        Time
+                        <input id="Time" type="datetime-local"/>
+                    </label>
+                </li>*@
+            @*<li>
+                <label>
+                    Type search
+                    <input type="search" placeholder="search" />
+                </label>
+                </li>
+                <li>
+                    <label>
+                        Type tel
+                        <input type="tel" placeholder="+14807790007" />
+                    </label>
+                </li>*@
+        </ul>
+
+        @*<a data-role="button" data-icon="rewind" data-click="newAction" class="km-justified">Cancel</a>
+            <a data-role="button" data-icon="add" data-click="addItem" class="km-primary km-justified">Add This Event</a>*@
+
+    </div>
+
+    <ul data-role="listview" id="listview" data-source="actions" data-template="action-template" data-header-template="action-header-template"></ul>
+
+    <a data-role="button" data-click="setPhone" data-align="right">Set Phone #</a>
+    <a data-role="button" data-click="deleteAllData" data-align="right">Clear Messages</a>
+    <a data-role="button" data-click="loadDefaultData" data-align="right">Load Defaults</a>
+    <br />
+    <span id="error"></span>
+    @*<ul data-role="actionsheet" id="actionsheet">
+            <li class="km-actionsheet-title">Send Message:</li>
+            <li><a data-click="setEvent">Send Now</a></li>
+            <li><a data-rel="modalview" href="#modalview">Set Time</a></li>
+        </ul>*@
+</div>
+
+@*<div data-role="view" id="newaction" data-title="New SaveMe Activity" data-layout="default" data-after-show="afterShowNewAction">
+        New Action Form
+    </div>*@
+
+<div data-role="modalview" id="modalview" style="width: 90%;">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Set Time to Delay</span>
+            @*<a data-click="closeModalView" data-role="button" data-align="right">Cancel</a>*@
+        </div>
+    </div>
+
+    <ul data-role="listview" data-style="inset">
+        <li>
+            <label>
+                Time
+                <input id="Time" type="datetime-local" style="width: 60%;" />
+            </label>
+        </li>
+    </ul>
+    <div data-role="footer">
+        <div data-role="navbar">
+            <a data-click="closeModalView" data-role="button" data-align="right">Cancel</a>
+            <a data-click="setEvent" data-role="button" data-align="right">Send Message</a>
+        </div>
+    </div>
+</div>
+
+<div data-role="modalview" id="modalview-phone" style="width: 90%;">
+    <div data-role="header">
+        <div data-role="navbar">
+            <span>Enter Your Phone Number</span>
+        </div>
+    </div>
+
+    <ul data-role="listview" data-style="inset" id="register-phone">
+        <li>
+            <label>
+                Phone
+                <input id="Phone" type="tel" placeholder="+1 (999) 000-0000" required />
+            </label>
+        </li>
+    </ul>
+    <div data-role="footer">
+        <div data-role="navbar">
+            @*<a data-click="closeModalView" data-role="button" data-align="right">Cancel</a>*@
+            <a data-click="savePhone" data-role="button" data-align="right">Save</a>
+        </div>
+    </div>
+</div>
+
+<div data-role="drawer" id="drawer" style="width: 20em; background-color: #6ed0f7;" data-use-native-scrolling="true">
+    @*<header data-role="header">
+            <div data-role="navbar">
+                <a data-align="left" data-role="button" class="nav-button" data-icon="contacts"></a>
+                <span data-role="view-title">Instructions</span>
+                <a data-align="right" data-role="button" class="nav-button" data-icon="settings"></a>
+            </div>
+        </header>*@
+    <div style="">
+        <h4>How to use SaveMe</h4>
+        <p>First, enter a phone number</p>
+        <p>"Load Defaults" will show some example texts and calls.</p>
+        <p>"+" creates a new text or call.</p>
+        <p>Click a text or call and press "Send" to send it immediately, or schedule the message for some time in the future.</p>
+        <h4>Why use SaveMe?</h4>
+        <p>SaveMe can get you out of a bad date, boring meeting, or any event you find unsavory! Set a delayed call and you can use it as an excuse to leave!</p>
+        <h4>How it works</h4>
+        <p>This app uses Twilio services to send messages. If you choose to send a call, a female voice will read the message to the recipient. Currently all calls and text messages will come from a 623 area code.</p>
+        @*<ul data-role="listview" class="km-listview-icons">
+                <li data-icon="favorites"><a onclick="setTheme('black')" data-transition="none">Black <span class="km-badge">6</span></a></li>
+                <li data-icon="favorites"><a onclick="setTheme('blueopal')" data-transition="none">Blue Opal <span class="km-badge">5</span></a></li>
+                <li data-icon="favorites"><a onclick="setTheme('bootstrap')" data-transition="none">Bootstrap <span class="km-badge">8</span></a></li>
+                <li data-icon="favorites"><a onclick="setTheme('material')" data-transition="none">Material</a></li>
+                <li data-icon="favorites"><a onclick="setTheme('materialblack')" data-transition="none">Material Black</a></li>
+                <li data-icon="favorites"><a onclick="setTheme('metro')" data-transition="none">Metro</a></li>
+            </ul>*@
+    </div>
+</div>
+
+<script type="script/x-kendo-template" id="action-template">
+    <a class="km-primary km-button-right"
+    data-role="detailbutton"
+    data-icon="delete"
+    data-click="deleteEvent"></a>
+    <a onclick="setTime(this)" data-role="listview-link">
+    <label>#: Title #</label> <span class="item-small">#: Time #</span>
+    <br />#: Message #</a>
+</script>
+
+<script type="text/x-kendo-template" id="action-header-template">
+    #: value #Me
+</script>
+
+<script language="javascript">
+    $(document).ready(function () {
+        $("#Phone").kendoMaskedTextBox({
+            mask: "+1 (999) 000-0000"
+        });
+    });
+
+    var messageValidator = $('#register').kendoValidator({
+        // validateOnBlur: false
+    }).data('kendoValidator');
+
+    var phoneValidator = $('#register-phone').kendoValidator({
+        // validateOnBlur: false
+    }).data('kendoValidator');
+
+    var actions = new kendo.data.DataSource({
+        data: [],
+        group: { field: "Action" }
+    });
+
+    function loadDefaultData(e) {
+        actions.data([
+            {
+                ID: 1,
+                Action: "Text",
+                Title: "Make Her Jealous",
+                Message: "Hey Sexy, what you doing tonight?",
+                Time: ""
+            },
+            {
+                ID: 2,
+                Action: "Text",
+                Title: "Bad Date",
+                Message: "Hi honey, please call me. Your grandfather is in the hospital. :(",
+                Time: ""
+            },
+            {
+                ID: 3,
+                Action: "Text",
+                Title: "Meeting Breaker",
+                Message: "I need you to fly to Shanghai right away. The manufacturing line is down!",
+                Time: ""
+            },
+            {
+                ID: 4,
+                Action: "Call",
+                Title: "Wakeup Call",
+                Message: "Good morning. It is time to get up now.",
+                Time: ""
+            },
+            {
+                ID: 5,
+                Action: "Call",
+                Title: "Booty Call",
+                Message: "Hey Sexy, what you doing tonight?",
+                Time: ""
+            }
+        ]);
+        saveItems(e);
+    }
+
+    function deleteAllData(e) {
+        actions.data([]);
+        saveItems(e);
+    }
+
+    function afterShowHome(e) {
+        console.log("Entering home page");
+        var items = localStorage.getItem("items");
+        if (items) {
+            actions.data(JSON.parse(items));
+        }
+        var phone = localStorage.getItem("phone");
+        if (!phone) {
+            setPhone();
+        }
+    }
+    //function afterShowCall(e) {
+    //    console.log("Entering call page");
+    //}
+    //function afterShowText(e) {
+    //    console.log("Entering text page");
+    //}
+    function afterShowNewAction(e) {
+        console.log("Entering new action page");
+    }
+
+    function validatePhone(e) {
+        return phoneValidator.validateInput($("#Phone"));
+    }
+
+    function validateMessage(e) {
+        var titleValid = messageValidator.validateInput($("#Title"));
+        var messageValid = messageValidator.validateInput($("#Message"));
+        return (titleValid === true && messageValid === true);
+    }
+
+    function addItem(e) {
+        if (validateMessage()) {
+            var data = actions.data();
+            var item = {
+                ID: data.length + 1,
+                Action: $("#Action").val(),
+                Title: $("#Title").val(),
+                Message: $("#Message").val(),
+                Time: $("#Time").val()
+            }
+            data.push(item);
+            saveItems(e);
+            newAction();
+        }
+    }
+
+    function deleteEvent(e) {
+        console.log("Removing an item from the list");
+
+        var item = $(e.target).closest("li");
+        var data = actions.data().find(x => x.uid === item.data().uid);
+        actions.data().remove(data);
+
+        saveItems(e);
+    }
+
+    function saveItems(e) {
+        localStorage.setItem("items", JSON.stringify(actions.data()));
+    }
+
+    var item;
+    function setTime(e) {
+        if (!isClosing) {
+            item = $(e).closest("li");
+            var modal = $("#modalview").data("kendoMobileModalView");
+            $("#Time").val(kendo.toString(new Date(), "yyyy-MM-ddTHH:mm"));
+            modal.open();
+        }
+    }
+
+    function setPhone(e) {
+        var modal = $("#modalview-phone").data("kendoMobileModalView");
+        var num = localStorage.getItem("phone");
+        if (num) {
+            $("#Phone").val(num);
+            $("#Phone").kendoMaskedTextBox({
+                mask: "+1 (999) 000-0000"
+            });
+        }
+        modal.open();
+    }
+
+    function setTheme(e) {
+        app.options.skin = e;
+    }
+    function savePhone(e) {
+        if (validatePhone()) {
+            var num = $("#Phone").val().replace(/[() -]/g, '');
+            localStorage.setItem("phone", num);
+            $("#Phone").val(null);
+            closeModalView();
+            console.log("Phone Saved");
+        } else {
+            console.log("Invalid format");
+        }
+    }
+
+    function setEvent(e) {
+        console.log("This will set a call or text to happen at a specified time.");
+
+        var listView = $("#listview").data("kendoMobileListView");
+        var data = listView.dataSource.getByUid(item.data().uid);
+        // default to a time that has passed
+        var time = kendo.parseDate($("#Time").val()).toUTCString();
+        if (time === "") {
+            time = kendo.parseDate("2017-01-01 11:11").toUTCString();
+        }
+        var phone = localStorage.getItem("phone");
+        var model = {
+            ID: data.ID,
+            Action: data.Action,
+            Title: data.Title,
+            Message: data.Message,
+            Time: time,
+            Phone: phone
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/SetEvent",
+            data: model,
+            datatype: "html",
+            success: function (response) {
+                console.log("Message set");
+                console.log(response);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("Message failed");
+                console.log(XMLHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
+        });
+        closeModalView();
+        clearFields();
+    }
+
+    function clearFields(e) {
+        $("#Time").val(null);
+        $("#Title").val(null);
+        $("#Message").val(null);
+    }
+
+    function newAction(e) {
+        $("#newAction").toggle("slow");
+        $("#add").toggle();
+        $("#trash").toggle();
+
+        clearFields();
+    }
+
+    var isClosing = false;
+    function closeModalView(e) {
+        isClosing = true;
+
+        setTimeout(function () {
+            $("#modalview").kendoMobileModalView("close");
+            $("#modalview-phone").kendoMobileModalView("close");
+            isClosing = false;
+        }, 500);
+    }
+</script>
+
+<style type="text/css">
+    .actionList {
+    }
+
+    .item-small {
+        font-size: .75em;
+    }
+
+    .km-flat .km-detail {
+        border-width: unset;
+        border-style: hidden;
+        font-size: 1.5rem; 
+        background-color: white;
+    }
+</style>

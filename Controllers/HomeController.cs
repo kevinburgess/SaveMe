@@ -18,10 +18,10 @@ namespace TextMe.Controllers
     public class HomeController : Controller
     {
         // Set our Account SID and Auth Token
-        private const string accountSid = "AC6211becd387f897d31b97fee2bf6d713";
-        private const string authToken = "2f704ce1c6ec3c68977c320e3507dc21";
+        private const string accountSid = "YOUR_TWILIO_ACCOUNT_SID";
+        private const string authToken = "YOUR_TWILIO_AUTH_TOKEN";
         public PhoneNumber To;
-        public static readonly PhoneNumber From = new PhoneNumber("+16237772199");
+        public static readonly PhoneNumber From = new PhoneNumber("YOUR_TWILIO_NUMBER");
 
         // GET: Home
         public ActionResult Index()
